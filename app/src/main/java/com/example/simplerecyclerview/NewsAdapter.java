@@ -13,15 +13,18 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder>{
 
     List<NewsItem> newsList;
-    public NewsAdapter(List<NewsItem> itemList) {
+    OnListItemClickListener onListItemClickListener;
+
+    public NewsAdapter(List<NewsItem> itemList, OnListItemClickListener onListItemClickListener) {
         newsList= itemList;
+        this.onListItemClickListener= onListItemClickListener;
     }
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater= LayoutInflater.from(parent.getContext());
         View view= inflater.inflate(R.layout.item_news, parent, false);
-        NewsViewHolder newsViewHolder= new NewsViewHolder(view);
+        NewsViewHolder newsViewHolder= new NewsViewHolder(view, onListItemClickListener);
 
         return newsViewHolder;
     }
@@ -46,10 +49,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         TextView titleTv;
         TextView subtitleTv;
 
-        NewsViewHolder(View itemView) {
+        NewsViewHolder(View itemView, OnListItemClickListener onListItemClickListener) {
             super(itemView);
             titleTv= itemView.findViewById(R.id.text_view_title);
             subtitleTv= itemView.findViewById(R.id.text_view_subtitle);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onListItemClickListener.onItemClick(position);
+                }
+            });
         }
     }
 }

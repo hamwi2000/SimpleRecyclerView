@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SimpleRecyclerView</string>
+    <string name="grid">الجدول</string>
+    <string name="list">القائمة</string>
 </resources>
